@@ -1,4 +1,4 @@
-#include "suppliedGlutFuncs.h"
+#include "SuppliedGlutFuncs.h"
 
 extern float pitch, heading, aspectRatio, perspective;
 extern int centerX, centerY;

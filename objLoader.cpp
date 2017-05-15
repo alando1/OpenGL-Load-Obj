@@ -6,7 +6,7 @@
 #endif
 #include <stdio.h>
 #include "obj.h"
-#include "suppliedGlutFuncs.h"
+#include "SuppliedGlutFuncs.h"
 
 //globals
 Obj* myObj = NULL;
@@ -21,7 +21,7 @@ Vec3 camLook(0.0f,0.0f,-1.0f);
 Vec3 camPos(0, 5, -10);
 int centerX, centerY;
 float add = 0.0f;
-bool pause = FALSE;
+bool pause = false;
 
 /*------View-Angles-------*/
 float heading = 0.0f;
@@ -212,7 +212,7 @@ int main(int argc, char** argv)
 {
   if(argc == 1)
   {
-    loadHiRes = FALSE;
+    loadHiRes = false;
     cout <<"> Loading Lo-Res textures ..." << endl;
   }
   else
@@ -220,17 +220,17 @@ int main(int argc, char** argv)
     if(argv[1][0] == '0')
     {
       cout <<"> Loading Lo-Res textures ..." << endl;
-      loadHiRes = FALSE;
+      loadHiRes = false;
     }
     else if(argv[1][0] == '1')
     {
       cout <<"> Loading Hi-Res textures ..." << endl;
-      loadHiRes = TRUE;
+      loadHiRes = true;
     }
     else 
     {
       cout <<"> Invalid arguements, loading Lo-Res textures ..." << endl;
-      loadHiRes = FALSE;
+      loadHiRes = false;
     }
   }
   initGL(argc, argv);

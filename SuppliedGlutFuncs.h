@@ -4,6 +4,7 @@
 #include <cmath>
 #include <chrono>
 #include "Vec3.h"
+#include "string.h"
 
 #include <list>
 #include <stdio.h>
