@@ -136,8 +136,8 @@ void cleanUp();
 void draw()
 {
  	glPushMatrix();
-	 	glTranslatef(0,-40.00,-105);
-		glScalef(85.0f+add,85.0f+add,85.0f+add);
+	 	glTranslatef(0,-40.0f,-50.0f);
+		glScalef(10.0f+add,10.0f+add,10.0f+add);
 
 		if(pause == true)
 			theta = 0;
@@ -200,7 +200,7 @@ int main(int argc, char** argv)
     glEnable(GL_CULL_FACE);
     glCullFace(GL_BACK);
 
-	myObj = new Obj("./data/stormtrooper/Stormtrooper.obj", "trooper"); 
+	myObj = new Obj("./data/City/town.obj", "test"); 
 
 	glutMainLoop();
 	return 0;
