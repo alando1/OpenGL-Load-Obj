@@ -5,13 +5,14 @@
 #include <GL/glut.h>
 #endif
 #include <stdio.h>
-#include "obj.h"
+#include "Obj.h"
 #include "SuppliedGlutFuncs.h"
 
+using namespace std;
 //globals
 Obj* myObj = NULL;
 GLuint elephant;
-float elephantrot;
+float theta = 1;
 char ch='1';
 
 bool keyStates[256], keyTaps[256], loadHiRes;
@@ -33,7 +34,7 @@ float camSpeed = 0.5f;
 
 void handleFunc(float dt)
 {
-  float vecx, vecy, vecz;
+  float vecx, vecz;
 
   if(keyTaps['.'])
     pause = !pause;
@@ -99,7 +100,6 @@ void handleFunc(float dt)
   if(keyStates['a'] || keyStates['A'])
   {
     vecx = camLook.z;
-    vecy = camLook.y;
     vecz = -camLook.x;
     camPos.x+= vecx*(camSpeed*2.0f*dt);
     camPos.z+= vecz*(camSpeed*2.0f*dt);
@@ -109,7 +109,6 @@ void handleFunc(float dt)
   {
 
     vecx = camLook.z;
-    vecy = camLook.y;
     vecz = -camLook.x;
     camPos.x-= vecx*(camSpeed*2.0f*dt);
     camPos.z-= vecz*(camSpeed*2.0f*dt);
@@ -134,62 +133,22 @@ void handleFunc(float dt)
 //other functions and main
 void cleanUp();
 
-//.obj loader code begins
-void loadObj(const char *fname)
-{
-
-  FILE *fp;
-  int read;
-  GLfloat x, y, z;
-  char ch;
-  elephant=glGenLists(1);
-  fp=fopen(fname,"r");
-  if (!fp) 
-      {
-          printf("can't open file %s\n", fname);
-  	      exit(1);
-      }
-  glPointSize(2.0);
-  glNewList(elephant, GL_COMPILE);
-
-  glPushMatrix();
-  glBegin(GL_POINTS);
-  while(!(feof(fp)))
-  {
-    read=fscanf(fp,"%c %f %f %f",&ch,&x,&y,&z);
-    if(read==4&&ch=='v')
-    {
-      glVertex3f(x,y,z);
-    }
-  }
-  glEnd();
-
-  glPopMatrix();
-  glEndList();
-  fclose(fp);
-}
-//.obj loader code ends here
-
 void draw()
 {
  	glPushMatrix();
-//  glTranslatef(0,0,30);
- 	glTranslatef(0,-40.00,-105);
-// 	glColor3f(1.0,0.23,0.27);
- 	
-  glScalef(85.0f+add,85.0f+add,85.0f+add);
-  //glScalef(0.001f,0.001f,0.001f);
+	 	glTranslatef(0,-40.00,-105);
+		glScalef(85.0f+add,85.0f+add,85.0f+add);
 
-  if(pause)
-    elephantrot = 0;
+		if(pause == true)
+			theta = 0;
 
- 	glRotatef(elephantrot,0,1,0);
-  myObj->draw();
+		glRotatef(theta,0,1,0);
+		myObj->draw();
+	glPopMatrix();
 
-// 	glCallList(elephant);
- 	glPopMatrix();
- 	elephantrot=elephantrot+0.1f;
- 	if(elephantrot>360)elephantrot=elephantrot-360;
+	theta += 0.1f;
+	if(theta > 360)
+		theta -= 360;
 }
 
 void display(void)
@@ -204,7 +163,7 @@ void display(void)
    	draw();
     glutSwapBuffers(); //swap the buffers
 
-      memset(keyTaps,0,256*sizeof(bool));
+    memset(keyTaps,0,256*sizeof(bool)); //resets input array for next frame
 
 }
 
@@ -241,10 +200,8 @@ int main(int argc, char** argv)
     glEnable(GL_CULL_FACE);
     glCullFace(GL_BACK);
 
-  myObj = new Obj("./data/stormtrooper/Stormtrooper.obj"); 
+	myObj = new Obj("./data/stormtrooper/Stormtrooper.obj", "trooper"); 
 
-
-  //loadObj("data/newgun.obj");//replace porsche.obj with radar.obj or any other .obj to display it
 	glutMainLoop();
 	return 0;
 }
