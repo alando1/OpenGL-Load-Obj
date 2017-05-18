@@ -9,7 +9,7 @@ to run on Windows
 
 to run on Linux
 -all libraries can be installed with sudo apt-get install
--install freeglut3-dev
+-install freeglut3-dev libglm-dev
 -type make in terminal to run makefile.
 -make writes compiled binaries to run.out
 -type ./run or ./run.out to run compiled program.

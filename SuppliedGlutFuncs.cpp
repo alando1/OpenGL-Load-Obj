@@ -3,7 +3,7 @@
 extern float pitch, heading, aspectRatio, perspective;
 extern int centerX, centerY;
 extern bool keyStates[256], keyTaps[256];
-//extern void* font;
+extern void* font;
 extern float FPS;//, speed;
 extern Vec3 camPos, camLook;
 
@@ -51,7 +51,7 @@ void initGL(int argc, char** argv)
 	glFrontFace(GL_CCW);
 
 
-	setupFog();
+	//setupFog();
 	setupLight();
 
 	memset(keyStates, 0, 256*sizeof(bool));
@@ -239,10 +239,10 @@ void renderText2D(float a, float b, void* font, char* string)
 
 void printScreenText()
 {
-	/*char msg[80];
+	char msg[80];
     glColor3f(0, 0.6f, 0);
  
-    sprintf(msg, "cam pos: %.3f, %.3f, %.3f", camPos.x, camPos.y, camPos.z);
+    /*sprintf(msg, "cam pos: %.3f, %.3f, %.3f", camPos.x, camPos.y, camPos.z);
     renderText2D(5.0f, 20.0f, font, msg);
 
     sprintf(msg, "FOV: %.1f", perspective);
@@ -252,10 +252,10 @@ void printScreenText()
     renderText2D(5.0f, 60.0f, font, msg);
 
     sprintf(msg, "Speed: %.3f", speed);
-    renderText2D(5.0f, 80.0f, font, msg);
+    renderText2D(5.0f, 80.0f, font, msg);*/
 
     sprintf(msg, "FPS: %.3f", FPS);
-    renderText2D(5.0f, 100.0f, font, msg);*/
+    renderText2D(5.0f, 100.0f, font, msg);
 
 }
 

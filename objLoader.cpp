@@ -6,31 +6,34 @@
 #endif
 #include <stdio.h>
 #include "Obj.h"
+#include <chrono>
 #include "SuppliedGlutFuncs.h"
 
 using namespace std;
 //globals
+chrono::steady_clock::time_point currentTime, lastTime;
 Obj* myObj = NULL;
 GLuint elephant;
 float theta = 1;
-char ch='1';
 
 bool keyStates[256], keyTaps[256], loadHiRes;
 
 /*--Camera Position and Look Vectors--*/
 Vec3 camLook(0.0f,0.0f,-1.0f);
 Vec3 camPos(0, 5, -10);
+Vec3 prevPos = camPos;
 int centerX, centerY;
 float add = 0.0f;
 bool pause = false;
 
-/*------View-Angles-------*/
 float heading = 0.0f;
 float pitch = 0.0f;
 float perspective = 45.0f;
 float aspectRatio = 1024.0f/768.0f; 
 float dt = 1.0f;
 float camSpeed = 0.5f;
+float FPS = 0, frameCount = 0, fpsUpdateTime = 0;
+void* font = GLUT_BITMAP_HELVETICA_18;
 
 void handleFunc(float dt)
 {
@@ -151,8 +154,32 @@ void draw()
 		theta -= 360;
 }
 
-void display(void)
+void updateTime()
+{
+	currentTime = chrono::steady_clock::now();
+	dt = chrono::duration_cast<chrono::duration<float, milli>>(currentTime-lastTime).count();
+    lastTime = currentTime;
+    fpsUpdateTime += dt;
+    frameCount++;
+}
+
+void updateFrames()
+{
+	if (fpsUpdateTime > 100.0f)
+	{
+		FPS = static_cast<float>(frameCount) / fpsUpdateTime * 1000.0f;
+		frameCount = 0;
+		fpsUpdateTime = 0.0f;
+	}
+
+	//Update prevPos
+	prevPos = camPos;
+}
+
+void display()
 {  
+
+	updateTime();
 
    	glClearColor (0.0,0.0,0.0,1.0); 
    	glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -161,8 +188,10 @@ void display(void)
     glLoadIdentity();
     gluLookAt(camPos.x,camPos.y,camPos.z,camPos.x+camLook.x,camPos.y+camLook.y,camPos.z+camLook.z,0,1,0);
    	draw();
-    glutSwapBuffers(); //swap the buffers
 
+   	printScreenText();
+   	updateFrames();
+    glutSwapBuffers(); //swap the buffers
     memset(keyTaps,0,256*sizeof(bool)); //resets input array for next frame
 
 }
@@ -202,6 +231,7 @@ int main(int argc, char** argv)
 
 	myObj = new Obj("./data/City/town.obj", "test"); 
 
+	lastTime = chrono::steady_clock::now();
 	glutMainLoop();
 	return 0;
 }
