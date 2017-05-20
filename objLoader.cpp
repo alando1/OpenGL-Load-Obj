@@ -13,7 +13,6 @@ using namespace std;
 //globals
 chrono::steady_clock::time_point currentTime, lastTime;
 Obj* myObj = NULL;
-GLuint elephant;
 float theta = 1;
 
 bool keyStates[256], keyTaps[256], loadHiRes;
@@ -24,6 +23,7 @@ Vec3 camPos(0, 5, -10);
 Vec3 prevPos = camPos;
 int centerX, centerY;
 float add = 0.0f;
+float scale = 1.0f;
 bool pause = false;
 
 float heading = 0.0f;
@@ -119,11 +119,13 @@ void handleFunc(float dt)
 
   if(keyStates['p'] || keyStates['P'])
   {
-    add+= 0.2f;
+    add+= 0.1f;
+    scale += add;
   }
   if(keyStates['o'] || keyStates['O'])
   {
-    add-= 0.2f;
+    add-= 0.1f;
+    scale += add;
   }
 
   if(keyStates['x'] || keyStates['X'])
@@ -140,7 +142,7 @@ void draw()
 {
  	glPushMatrix();
 	 	glTranslatef(0,-40.0f,-50.0f);
-		glScalef(10.0f+add,10.0f+add,10.0f+add);
+		glScalef(scale, scale, scale);
 
 		if(pause == true)
 			theta = 0;

@@ -1,6 +1,6 @@
 #include "SuppliedGlutFuncs.h"
 
-extern float pitch, heading, aspectRatio, perspective;
+extern float pitch, heading, aspectRatio, perspective, scale;
 extern int centerX, centerY;
 extern bool keyStates[256], keyTaps[256];
 extern void* font;
@@ -242,9 +242,15 @@ void printScreenText()
 	char msg[80];
     glColor3f(0, 0.6f, 0);
  
-    /*sprintf(msg, "cam pos: %.3f, %.3f, %.3f", camPos.x, camPos.y, camPos.z);
+    sprintf(msg, "cam pos: %.3f, %.3f, %.3f", camPos.x, camPos.y, camPos.z);
     renderText2D(5.0f, 20.0f, font, msg);
 
+    sprintf(msg, "FPS: %.3f", FPS);
+    renderText2D(5.0f, 100.0f, font, msg);
+
+    sprintf(msg, "scale: %.3f", scale);
+    renderText2D(5.0f, 80.0f, font, msg);
+    /*
     sprintf(msg, "FOV: %.1f", perspective);
     renderText2D(5.0f, 40.0f, font, msg);
 
@@ -254,8 +260,6 @@ void printScreenText()
     sprintf(msg, "Speed: %.3f", speed);
     renderText2D(5.0f, 80.0f, font, msg);*/
 
-    sprintf(msg, "FPS: %.3f", FPS);
-    renderText2D(5.0f, 100.0f, font, msg);
 
 }
 
