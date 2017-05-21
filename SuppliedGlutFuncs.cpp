@@ -1,7 +1,7 @@
 #include "SuppliedGlutFuncs.h"
 
 extern float pitch, heading, aspectRatio, perspective, scale;
-extern int centerX, centerY;
+extern int centerX, centerY, hud;
 extern bool keyStates[256], keyTaps[256];
 extern void* font;
 extern float FPS;//, speed;
@@ -239,27 +239,42 @@ void renderText2D(float a, float b, void* font, char* string)
 
 void printScreenText()
 {
-	char msg[80];
-    glColor3f(0, 0.6f, 0);
- 
-    sprintf(msg, "cam pos: %.3f, %.3f, %.3f", camPos.x, camPos.y, camPos.z);
-    renderText2D(5.0f, 20.0f, font, msg);
+	if(hud%2 == 0)
+	{
+		char msg[80];
+	    glColor3f(0, 0.6f, 0);
 
-    sprintf(msg, "FPS: %.3f", FPS);
-    renderText2D(5.0f, 100.0f, font, msg);
+	    sprintf(msg, "Position: ( %.03f, %.03f, %.03f )", camPos.x, camPos.y, camPos.z);
+	    renderText2D(5.0f, 20.0f, font, msg);
 
-    sprintf(msg, "scale: %.3f", scale);
-    renderText2D(5.0f, 80.0f, font, msg);
-    /*
-    sprintf(msg, "FOV: %.1f", perspective);
-    renderText2D(5.0f, 40.0f, font, msg);
+	    sprintf(msg, "look Vec: < %.03f, %.03f, %.03f >", camLook.x, camLook.y, camLook.z);
+	    renderText2D(5.0f, 40.0f, font, msg);
 
-    sprintf(msg, "look vector: %.3f, %.3f, %.3f", camLook.x, camLook.y, camLook.z);
-    renderText2D(5.0f, 60.0f, font, msg);
+	    sprintf(msg, "scale: %.3f", scale);
+	    renderText2D(5.0f, 60.0f, font, msg);
 
-    sprintf(msg, "Speed: %.3f", speed);
-    renderText2D(5.0f, 80.0f, font, msg);*/
+	    sprintf(msg, "FPS: %.3f", FPS);
+	    renderText2D(5.0f, 80.0f, font, msg);
 
+	    sprintf(msg, "Press P to Pause.");
+	    renderText2D(5.0f, 100.0f, font, msg);
+
+	    sprintf(msg, "Press H to Clear.");
+	    renderText2D(5.0f, 120.0f, font, msg);
+
+		sprintf(msg, "+ Increase");
+	    renderText2D(5.0f, glutGet(GLUT_WINDOW_HEIGHT)-105.0f, font, msg);
+		sprintf(msg, "- Decrease");
+	    renderText2D(5.0f, glutGet(GLUT_WINDOW_HEIGHT)-85.0f, font, msg);
+		sprintf(msg, "W-Forward");
+	    renderText2D(5.0f, glutGet(GLUT_WINDOW_HEIGHT)-65.0f, font, msg);
+	   	sprintf(msg, "A-Left");
+	    renderText2D(5.0f, glutGet(GLUT_WINDOW_HEIGHT)-45.0f, font, msg);
+		sprintf(msg, "D-Right");
+	    renderText2D(5.0f, glutGet(GLUT_WINDOW_HEIGHT)-25.0f, font, msg);
+		sprintf(msg, "S-Back");
+	    renderText2D(5.0f, glutGet(GLUT_WINDOW_HEIGHT)-5.0f, font, msg);
+	}
 
 }
 
