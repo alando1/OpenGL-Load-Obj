@@ -1,0 +1,1 @@
+g++ -std=c++11 bezier.cpp -o bez -O3 -I"./include" -L"./lib" -lfreeglut -lSOIL -lopengl32 -lglu32 -Wall

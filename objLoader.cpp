@@ -7,12 +7,13 @@
 #include "Obj.h"
 #include <chrono>
 #include "SuppliedGlutFuncs.h"
+#include "DrawFunc.h"
 
 using namespace std;
 
 /*--Initial Camera Position and Look Vectors--*/
 Vec3 camLook(0.0f,0.0f,-1.0f);
-Vec3 camPos(0, 5, -10);
+Vec3 camPos(0, 0, 0);
 Vec3 prevPos = camPos;
 int centerX, centerY, hud = 0;
 float add = 1.0f, scale = 1.0f, theta = 1;
@@ -130,8 +131,8 @@ void draw()
 	 	glTranslatef(0,0.0f,-50.0f);
 		glScalef(scale, scale, scale);
 
-		if(pause == false)
-			glRotatef(theta,0,1,0);
+		// if(pause == false)
+		// 	glRotatef(theta,0,1,0);
 
 		myObj->draw();
 	glPopMatrix();
@@ -172,6 +173,8 @@ void display()
     glLoadIdentity();
     gluLookAt(camPos.x,camPos.y,camPos.z,camPos.x+camLook.x,camPos.y+camLook.y,camPos.z+camLook.z,0,1,0);
    	draw();
+
+   	drawgrid();
 
    	printScreenText();
    	updateFrames();
