@@ -2,11 +2,22 @@
 #include <math.h>
 #include <stdio.h>
 #define CTRL_COUNT 100
+#include "Vec3.h"
 
 int ctrlPointsCount = 5;
 float weight = -0.5f;
 int ctrlPointsX[CTRL_COUNT], ctrlPointsY[CTRL_COUNT];
 int X1[5]={50,100,100,70,40}, Y1[5]={50,50,25,10,30};
+
+float ToDegrees(float rad)
+{
+	return (rad * 180.0f / PI);
+}
+
+float ToRadians(float deg)
+{
+	return (deg * PI / 180.0f);
+}
 
 void myInit()
 {
@@ -15,7 +26,16 @@ void myInit()
 	glPointSize(8.0);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluOrtho2D(0.0,128.0,0.0,96.0);
+	gluOrtho2D(-200.0f, 200.0f, -200.0f, 200.0f);
+
+	float hyp = 75.0f;
+	float delta = 360.0f / 5.0f;
+	for(int i = 0; i < 5; i++)
+	{
+		X1[i] = hyp * cos(ToRadians(delta * i));
+		Y1[i] = hyp * sin(ToRadians(delta * i));
+	}
+
 }
 //p(t)=(1-t)^3*p0+3t(1-t)^2*p1+3t^2(1-t)p2+t^3p3
 

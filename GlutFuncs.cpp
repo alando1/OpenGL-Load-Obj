@@ -4,7 +4,7 @@ void reshape(int w, int h);
 extern void myDisplay();
 extern bool pause;
 extern void* font;
-extern float FPS, spin, offset;
+extern float FPS, spin;//, offset;
 extern float X[], Y[];
 
 float aspectRatio;
@@ -112,8 +112,8 @@ void printScreenText()
 	    sprintf(msg, "FPS: %.3f", FPS);
 	    renderText2D(5.0f, 80.0f, font, msg);
 
-	    sprintf(msg, "offset: %.3f", offset);
-	    renderText2D(5.0f, 100.0f, font, msg);
+	    // sprintf(msg, "offset: %.3f", offset);
+	    // renderText2D(5.0f, 100.0f, font, msg);
 
 	    sprintf(msg, "Press SB to Pause.");
 	    renderText2D(5.0f, 120.0f, font, msg);

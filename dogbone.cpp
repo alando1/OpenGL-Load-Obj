@@ -79,20 +79,20 @@ void myDisplay()
 	// center point is prime vector scaled by hyp translated from p0 position
 	Vec2 center = Vec2(hyp * prime.x + X[0], hyp * prime.y + Y[0]);
 
-	float diffRad = ToRadians((180.0f - 90.0f - abs(ToDegrees(theta))) * 2.0f);
-
-	Vec2 offsetVec = Vec2(X[2] - center.x, Y[2] - center.y);
-	Vec2 relVec = Vec2(X[1] - center.x, Y[1] - center.y);
-
-	float offsetRad = acos( offsetVec.dot(relVec) / (offsetVec.length() * relVec.length()) );
-	offset = ToDegrees(offsetRad);
-	glLineWidth(3.0f);
-
 	// draw center point
 	glBegin(GL_POINTS);
 	glColor3f(0.0f, 0.0f, 1.0f);
 	glVertex2f(center.x, center.y);
 	glEnd();
+
+	// diffRad - angle between opp leg of v1 and opp leg of v2
+	float diffRad = ToRadians((180.0f - 90.0f - abs(ToDegrees(theta))) * 2.0f);
+	float angleOfCurve = 360.0f - ToDegrees(diffRad);
+
+	// relative vector used as starting point for curve iteration
+	Vec2 relVec = Vec2(X[1] - center.x, Y[1] - center.y);
+
+	glLineWidth(3.0f);
 
 	// draw first leg
 	glColor3f(1.0f, 1.0f, 1.0f);
@@ -102,15 +102,16 @@ void myDisplay()
 
 	// compute the delta angle for curve iteration based off the number of segments
 	int numOfSegments = 12;
-	float delta = ToRadians((360.0f - ToDegrees(diffRad)) / (float)numOfSegments);
+	float delta = ToRadians(angleOfCurve / (float)numOfSegments);
 	Vec2 tmp = Vec2(0.0f, 0.0f);
 
 	// compute points along the curve from p1 to p2
-	for (float i = 2 * PI - diffRad; i > 0.0f; i -= delta)
+	for (float i = 0.0f; i < ToRadians(angleOfCurve); i += delta)
 	{
-		glColor3f(i/3.926f, i/3.926f, 1.0f);
-		tmp = Vec2(center.x + opp * cos(i - offsetRad), center.y + opp * sin(i - offsetRad));
-		//tmp = Vec2(opp * cos(i), opp * sin(i));
+		tmp.x = relVec.x * cos(-i) - relVec.y * sin(-i) + center.x;
+		tmp.y = relVec.x * sin(-i) + relVec.y * cos(-i) + center.y;
+
+		glColor3f((ToRadians(angleOfCurve) - i)/ToRadians(angleOfCurve), (ToRadians(angleOfCurve) - i)/ToRadians(angleOfCurve), 1.0f);
 		glVertex2f(tmp.x, tmp.y);
 	}
 
@@ -123,46 +124,58 @@ void myDisplay()
 	Vec2 v3 = Vec2(X[4] - X[3], Y[4] - Y[3]);
 	Vec2 v4 = Vec2(X[5] - X[3], Y[5] - Y[3]);
 
+	// determine angle between two vectors and bisecting angle
 	theta = acos(v3.dot(v4) / (v3.length() * v4.length()) ) / 2.0f;
 
+	// lengths of triangle sides needed to find center point of curve
 	opp = v3.length() * tan(theta);
 	hyp = sqrt(pow(v3.length(), 2.0f) + pow(opp, 2.0f));
 
+	// normalize vector and apply rotation matrix of theta degrees
 	v3.normalize();
 	prime.x = v3.x * cos(theta) - v3.y * sin(theta);
 	prime.y = v3.x * sin(theta) + v3.y * cos(theta);
 
+	// second center point
 	center.x = hyp * prime.x + X[3];
 	center.y = hyp * prime.y + Y[3];
 
+	// draw second center point
 	glBegin(GL_POINTS);
 	glColor3f(0.0f, 0.0f, 1.0f);
 	glVertex2f(center.x, center.y);
 	glEnd();
 
+	// diffRad - angle between opp leg of v1 and opp leg of v2
 	diffRad = ToRadians((180.0f - 90.0f - abs(ToDegrees(theta))) * 2.0f);
-	Vec2 xVec = Vec2(1.0f, 0.0f);
-	relVec = Vec2(X[4] - center.x, Y[4] - center.y);
-	offsetRad = acos( xVec.dot(relVec) / (xVec.length() * relVec.length()) );
-	delta = ToRadians(((360.0f - ToDegrees(diffRad)) / (float)numOfSegments));
+	angleOfCurve = 360.0f - ToDegrees(diffRad);
 
+	// relative vector used as starting point for curve iteration
+	relVec = Vec2(X[4] - center.x, Y[4] - center.y);
+
+	// compute the delta angle for curve iteration based off the number of segments
+	delta = ToRadians(angleOfCurve / (float)numOfSegments);
+
+	// compute points along the curve from p4 to p5
 	glBegin(GL_LINE_STRIP);
-	for (float i = 0; i < 2 * PI - diffRad; i += delta)
+	for (float i = 0.0f; i < ToRadians(angleOfCurve); i += delta)
 	{
-		glColor3f(i/3.926f, i/3.926f, 1.0f);
-		tmp = Vec2(center.x + opp * cos(i + offsetRad), center.y + opp * sin(i + offsetRad));
-		//tmp = Vec2(opp * cos(i), opp * sin(i));
+		tmp.x = relVec.x * cos(i) - relVec.y * sin(i) + center.x;
+		tmp.y = relVec.x * sin(i) + relVec.y * cos(i) + center.y;
+
+		glColor3f(i/ToRadians(angleOfCurve), i/ToRadians(angleOfCurve), 1.0f);
 		glVertex2f(tmp.x, tmp.y);
 	}
 
+	// connect last points
 	glVertex2f(X[5], Y[5]);
 	glVertex2f(X[3], Y[3]);
 
 	glEnd();
 	glFlush();
-   	printScreenText();
-   	updateFrames();
-    glutSwapBuffers(); //swap the buffers
+   	printScreenText();	//update HUD
+   	updateFrames();		//update FPS
+    glutSwapBuffers();	//swap the buffers
 }
 
 
