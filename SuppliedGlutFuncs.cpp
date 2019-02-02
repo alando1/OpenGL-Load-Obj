@@ -114,33 +114,33 @@ void mouseMove(int x, int y)
 {
 	if (!(x == centerX && y == centerY))
 	{
-		// int dx = x - centerX;
-		// int dy = y - centerY;
+		int dx = x - centerX;
+		int dy = y - centerY;
 	
-		// heading -= static_cast<float>(dx)	* MouseSensitivity;  //0.08f;
-		// pitch -= static_cast<float>(dy)		* MouseSensitivity;	//0.08f;
+		heading -= static_cast<float>(dx)	* MouseSensitivity;  //0.08f;
+		pitch -= static_cast<float>(dy)		* MouseSensitivity;	//0.08f;
 
-		// if(pitch > 85.0f)
-		// 	pitch = 85.0f;
-		// else
-		// {
-		// 	if(pitch < -85.0f)
-		// 		pitch = -85.0f;
-		// }
+		if(pitch > 85.0f)
+			pitch = 85.0f;
+		else
+		{
+			if(pitch < -85.0f)
+				pitch = -85.0f;
+		}
 
-		// Vec3 newLook(0,0,-1);
-		// Vec3 newPos;
+		Vec3 newLook(0,0,-1);
+		Vec3 newPos;
 
-		// // rotate around the X axis by 'pitch' degrees
-		// newPos.x = newLook.x;
-		// newPos.y = newLook.y * cosf(pitch * PI_OVER_180) - newLook.z * sinf(pitch * PI_OVER_180);
-		// newPos.z = newLook.y * sinf(pitch * PI_OVER_180) + newLook.z * cosf(pitch * PI_OVER_180);
+		// rotate around the X axis by 'pitch' degrees
+		newPos.x = newLook.x;
+		newPos.y = newLook.y * cosf(pitch * PI_OVER_180) - newLook.z * sinf(pitch * PI_OVER_180);
+		newPos.z = newLook.y * sinf(pitch * PI_OVER_180) + newLook.z * cosf(pitch * PI_OVER_180);
 		
-		// // rotate resulting vector around Y axis by 'heading' degrees,
-		// // then store into camLook.x,Y,Z
-		// camLook.x = newPos.x * cos(heading * PI_OVER_180) + newPos.z * sin(heading * PI_OVER_180);
-		// camLook.y = newPos.y;
-		// camLook.z = -newPos.x * sin(heading * PI_OVER_180) + newPos.z * cos(heading * PI_OVER_180);
+		// rotate resulting vector around Y axis by 'heading' degrees,
+		// then store into camLook.x,Y,Z
+		camLook.x = newPos.x * cos(heading * PI_OVER_180) + newPos.z * sin(heading * PI_OVER_180);
+		camLook.y = newPos.y;
+		camLook.z = -newPos.x * sin(heading * PI_OVER_180) + newPos.z * cos(heading * PI_OVER_180);
 		glutWarpPointer(centerX, centerY);
 
 	}

@@ -4,7 +4,10 @@ void reshape(int w, int h);
 extern void myDisplay();
 extern bool pause;
 extern void* font;
-extern float FPS;
+extern float FPS, spin, offset;
+extern float X[], Y[];
+
+float aspectRatio;
 
 void initGL(int argc, char** argv)
 {
@@ -13,7 +16,8 @@ void initGL(int argc, char** argv)
 	glutInitWindowSize(500, 500);
 	glutInitWindowPosition(100, 150);
 	glutCreateWindow("DogBone Test");
-	// glutFullScreen();
+	//glutFullScreen();
+	aspectRatio = (GLUT_WINDOW_WIDTH / GLUT_WINDOW_HEIGHT);
 	
 	// register callbacks
 	glutReshapeFunc(reshape);
@@ -77,7 +81,7 @@ void renderText2D(float a, float b, void* font, char* string)
             glPushMatrix();
                 glLoadIdentity();
                 glOrtho(0, glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT), 0, 1.0, 5000.0);
-                renderBitmapString(a, b, 1.0f, font, string);
+                renderBitmapString(a, b, -1.0f, font, string);
             glPopMatrix();
         glMatrixMode(GL_MODELVIEW);    
     glPopMatrix();
@@ -96,17 +100,23 @@ void printScreenText()
 	//     sprintf(msg, "look Vec: < %.03f, %.03f, %.03f >", camLook.x, camLook.y, camLook.z);
 	//     renderText2D(5.0f, 40.0f, font, msg);
 
-	//     sprintf(msg, "scale: %.3f", scale);
-	//     renderText2D(5.0f, 60.0f, font, msg);
+	    sprintf(msg, "P0: %.3f, %.3f", X[0], Y[0]);
+	    renderText2D(5.0f, 20.0f, font, msg);
+
+	    sprintf(msg, "P1: %.3f, %.3f", X[1], Y[1]);
+	    renderText2D(5.0f, 40.0f, font, msg);
+
+	    sprintf(msg, "spin: %.3f", spin);
+	    renderText2D(5.0f, 60.0f, font, msg);
 
 	    sprintf(msg, "FPS: %.3f", FPS);
 	    renderText2D(5.0f, 80.0f, font, msg);
 
-	//     sprintf(msg, "Press P to Pause.");
-	//     renderText2D(5.0f, 100.0f, font, msg);
+	    sprintf(msg, "offset: %.3f", offset);
+	    renderText2D(5.0f, 100.0f, font, msg);
 
-	//     sprintf(msg, "Press H to Clear.");
-	//     renderText2D(5.0f, 120.0f, font, msg);
+	    sprintf(msg, "Press SB to Pause.");
+	    renderText2D(5.0f, 120.0f, font, msg);
 
 	// 	sprintf(msg, "+ Increase");
 	//     renderText2D(5.0f, glutGet(GLUT_WINDOW_HEIGHT)-105.0f, font, msg);
@@ -126,26 +136,26 @@ void printScreenText()
 
 void reshape(int w, int h) 
 {
-	// // Prevent a divide by zero, when window is too short
-	// // (you cant make a window of zero width).
-	// if (h == 0)
-	// 	h = 1;
+	// Prevent a divide by zero, when window is too short
+	// (you cant make a window of zero width).
+	if (h == 0)
+		h = 1;
 
-	// float ratio =  w * 1.0 / h;
-	// aspectRatio = ratio;
+	float ratio =  w * 1.0f / h;
+	aspectRatio = ratio;
 
-	// // Use the Projection Matrix
-	// glMatrixMode(GL_PROJECTION);
+	// Use the Projection Matrix
+	glMatrixMode(GL_PROJECTION);
 
-	// // Reset Matrix
-	// glLoadIdentity();
+	// Reset Matrix
+	glLoadIdentity();
 
-	// // Set the viewport to be the entire window
-	// glViewport(0, 0, w, h);
+	// Set the viewport to be the entire window
+	glViewport(0, 0, w, h);
 
-	// // Set the correct perspective.
-	// gluPerspective(perspective, aspectRatio, 0.1f, 10000.0f);
+	// Set the correct perspective.
+	//gluPerspective(perspective, aspectRatio, 0.1f, 10000.0f);
 
-	// // Get Back to the Modelview
-	// glMatrixMode(GL_MODELVIEW);
+	// Get Back to the Modelview
+	glMatrixMode(GL_MODELVIEW);
 }

@@ -258,7 +258,7 @@ void drawTest(float dt)
 	
 }*/
 
-/*
+
 void setVSync(int interval=1)
 {
 
@@ -284,4 +284,4 @@ void setVSync(int interval=1)
 	    }
 	}	
 }
-*/
+

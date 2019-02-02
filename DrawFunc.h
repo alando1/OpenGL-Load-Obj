@@ -23,4 +23,4 @@ void drawPortalGun(float dt);
 void weaponRecoil();
 void drawTest(float dt);
 
-//void setVSync(int i);
+void setVSync(int i);
