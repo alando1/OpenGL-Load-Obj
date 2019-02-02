@@ -89,48 +89,35 @@ void renderText2D(float a, float b, void* font, char* string)
 
 void printScreenText()
 {
-	// if(hud%2 == 0)
-	// {
-		char msg[80];
-	    glColor3f(0, 0.6f, 0);
+	char msg[80];
+    glColor3f(0, 0.6f, 0);
 
-	//     sprintf(msg, "Position: ( %.03f, %.03f, %.03f )", camPos.x, camPos.y, camPos.z);
-	//     renderText2D(5.0f, 20.0f, font, msg);
+    sprintf(msg, "spin: %.3f", spin);
+    renderText2D(5.0f, 40.0f, font, msg);
 
-	//     sprintf(msg, "look Vec: < %.03f, %.03f, %.03f >", camLook.x, camLook.y, camLook.z);
-	//     renderText2D(5.0f, 40.0f, font, msg);
+    sprintf(msg, "FPS: %.3f", FPS);
+    renderText2D(5.0f, 60.0f, font, msg);
 
-	    sprintf(msg, "P0: %.3f, %.3f", X[0], Y[0]);
-	    renderText2D(5.0f, 20.0f, font, msg);
+    sprintf(msg, "P0: %.3f, %.3f", X[0], Y[0]);
+    renderText2D(5.0f, glutGet(GLUT_WINDOW_HEIGHT)-105.0f, font, msg);
 
-	    sprintf(msg, "P1: %.3f, %.3f", X[1], Y[1]);
-	    renderText2D(5.0f, 40.0f, font, msg);
+    sprintf(msg, "P1: %.3f, %.3f", X[1], Y[1]);
+    renderText2D(5.0f, glutGet(GLUT_WINDOW_HEIGHT)-85.0f, font, msg);
 
-	    sprintf(msg, "spin: %.3f", spin);
-	    renderText2D(5.0f, 60.0f, font, msg);
+    sprintf(msg, "P2: %.3f, %.3f", X[2], Y[2]);
+    renderText2D(5.0f, glutGet(GLUT_WINDOW_HEIGHT)-65.0f, font, msg);
 
-	    sprintf(msg, "FPS: %.3f", FPS);
-	    renderText2D(5.0f, 80.0f, font, msg);
+    sprintf(msg, "P3: %.3f, %.3f", X[3], Y[3]);
+    renderText2D(5.0f, glutGet(GLUT_WINDOW_HEIGHT)-45.0f, font, msg);
+    
+    sprintf(msg, "P4: %.3f, %.3f", X[4], Y[4]);
+    renderText2D(5.0f, glutGet(GLUT_WINDOW_HEIGHT)-25.0f, font, msg);
+    
+    sprintf(msg, "P5: %.3f, %.3f", X[5], Y[5]);
+    renderText2D(5.0f, glutGet(GLUT_WINDOW_HEIGHT)-5.0f, font, msg);
 
-	    // sprintf(msg, "offset: %.3f", offset);
-	    // renderText2D(5.0f, 100.0f, font, msg);
-
-	    sprintf(msg, "Press SB to Pause.");
-	    renderText2D(5.0f, 120.0f, font, msg);
-
-	// 	sprintf(msg, "+ Increase");
-	//     renderText2D(5.0f, glutGet(GLUT_WINDOW_HEIGHT)-105.0f, font, msg);
-	// 	sprintf(msg, "- Decrease");
-	//     renderText2D(5.0f, glutGet(GLUT_WINDOW_HEIGHT)-85.0f, font, msg);
-	// 	sprintf(msg, "W-Forward");
-	//     renderText2D(5.0f, glutGet(GLUT_WINDOW_HEIGHT)-65.0f, font, msg);
-	//    	sprintf(msg, "A-Left");
-	//     renderText2D(5.0f, glutGet(GLUT_WINDOW_HEIGHT)-45.0f, font, msg);
-	// 	sprintf(msg, "D-Right");
-	//     renderText2D(5.0f, glutGet(GLUT_WINDOW_HEIGHT)-25.0f, font, msg);
-	// 	sprintf(msg, "S-Back");
-	//     renderText2D(5.0f, glutGet(GLUT_WINDOW_HEIGHT)-5.0f, font, msg);
-	// }
+    sprintf(msg, "Press SB to Pause.");
+    renderText2D(5.0f, 20.0f, font, msg);
 
 }
 
