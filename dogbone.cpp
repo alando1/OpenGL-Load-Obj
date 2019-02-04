@@ -19,6 +19,7 @@ chrono::steady_clock::time_point currentTime, lastTime;
 float spin = 1.0f;
 float deltaSpin = 1.0f;
 float offset = 0.0f;
+float length = 0.0f;
 
 //HORIZONTAL TEST
 float X [6] = { 0.0f,  100.0f,  70.7f,  0.0f,  -100.0f,  -70.7f };
@@ -264,5 +265,18 @@ void rotateCoords()
 		X[i] = tmpx[i];
 		Y[i] = tmpy[i];
 	}
-	
+}
+
+void IncreaseLength()
+{
+	Vec2 tmp = Vec2(X[0] - X[3], Y[0] - Y[3]);
+	length = tmp.length();
+
+
+
+}
+
+void DecreaseLength()
+{
+
 }

@@ -1,7 +1,7 @@
 #include "GlutFuncs.h"
 
 void reshape(int w, int h);
-extern void myDisplay();
+extern void myDisplay(), IncreaseLength(), DecreaseLength();
 extern bool pause;
 extern void* font;
 extern float FPS, spin;//, offset;
@@ -49,7 +49,16 @@ void pressNormalKeys(unsigned char key, int xx, int yy)
 	{
 		cout << "> SPB: Pause pressed." << endl;
 		pause = !pause;
-	}	
+	}
+
+	if(key == '=')
+	{
+		IncreaseLength();
+	}
+	else if(key == '-')
+	{
+		DecreaseLength();
+	}
 }
 
 void releaseNormalKeys(unsigned char key, int xx, int yy)
@@ -99,26 +108,31 @@ void printScreenText()
     renderText2D(5.0f, 60.0f, font, msg);
 
     sprintf(msg, "P0: %.3f, %.3f", X[0], Y[0]);
-    renderText2D(5.0f, glutGet(GLUT_WINDOW_HEIGHT)-105.0f, font, msg);
+    renderText2D(5.0f, glutGet(GLUT_WINDOW_HEIGHT) - 105.0f, font, msg);
 
     sprintf(msg, "P1: %.3f, %.3f", X[1], Y[1]);
-    renderText2D(5.0f, glutGet(GLUT_WINDOW_HEIGHT)-85.0f, font, msg);
+    renderText2D(5.0f, glutGet(GLUT_WINDOW_HEIGHT) - 85.0f, font, msg);
 
     sprintf(msg, "P2: %.3f, %.3f", X[2], Y[2]);
-    renderText2D(5.0f, glutGet(GLUT_WINDOW_HEIGHT)-65.0f, font, msg);
+    renderText2D(5.0f, glutGet(GLUT_WINDOW_HEIGHT) - 65.0f, font, msg);
 
     sprintf(msg, "P3: %.3f, %.3f", X[3], Y[3]);
-    renderText2D(5.0f, glutGet(GLUT_WINDOW_HEIGHT)-45.0f, font, msg);
+    renderText2D(5.0f, glutGet(GLUT_WINDOW_HEIGHT) - 45.0f, font, msg);
     
     sprintf(msg, "P4: %.3f, %.3f", X[4], Y[4]);
-    renderText2D(5.0f, glutGet(GLUT_WINDOW_HEIGHT)-25.0f, font, msg);
+    renderText2D(5.0f, glutGet(GLUT_WINDOW_HEIGHT) - 25.0f, font, msg);
     
     sprintf(msg, "P5: %.3f, %.3f", X[5], Y[5]);
-    renderText2D(5.0f, glutGet(GLUT_WINDOW_HEIGHT)-5.0f, font, msg);
+    renderText2D(5.0f, glutGet(GLUT_WINDOW_HEIGHT) - 5.0f, font, msg);
 
     sprintf(msg, "Press SB to Pause.");
     renderText2D(5.0f, 20.0f, font, msg);
 
+	sprintf(msg, "+ Increase  Leg");
+    renderText2D(glutGet(GLUT_WINDOW_WIDTH) - 160.0f, 20.0f, font, msg);
+
+	sprintf(msg, "- Decrease Leg");
+    renderText2D(glutGet(GLUT_WINDOW_WIDTH) - 160.0f, 40.0f, font, msg);
 }
 
 void reshape(int w, int h) 
